@@ -34,8 +34,9 @@ class RangeRule(ValidationRule):
                        f"the configured range"
             )
         else:
-            message = f"{self.column} contains {failed_rows} "
-            "values outside the configured range"
+            message = (f"{self.column} contains {failed_rows} "
+                       f"values outside the configured range"
+            )
 
             
         return ValidationResult(
