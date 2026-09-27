@@ -1,9 +1,11 @@
+import pandas as pd
+
 from ..base import ValidationRule
 from ..result import ValidationResult
 
 
 class RangeRule(ValidationRule):
-    def __init__(self, column, min_value: float, max_value: float | None = None) -> None:
+    def __init__(self, column: str, min_value: float, max_value: float | None = None) -> None:
         super().__init__(column)
         if max_value is not None and min_value > max_value:
             raise ValueError(
@@ -14,7 +16,7 @@ class RangeRule(ValidationRule):
         self.min_value = min_value
         self.max_value = max_value
 
-    def validate(self, data, dataset) -> ValidationResult:
+    def validate(self, data: pd.DataFrame, dataset: str) -> ValidationResult:
         if self.max_value is None:
             failed_rows = len(data[
                 data[self.column] < self.min_value

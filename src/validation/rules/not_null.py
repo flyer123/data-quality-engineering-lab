@@ -1,3 +1,5 @@
+import pandas as pd
+
 from ..base import ValidationRule
 from ..result import ValidationResult
 
@@ -5,7 +7,7 @@ from ..result import ValidationResult
 class NotNullRule(ValidationRule):
 
 
-    def validate(self, data, dataset) -> ValidationResult:
+    def validate(self, data: pd.DataFrame, dataset: str) -> ValidationResult:
         failed_rows = int(data[self.column].isna().sum())
         passed = failed_rows == 0
 

@@ -37,4 +37,13 @@ def test_not_null_fails_when_all_values_are_null() -> None:
 
     assert result.failed_rows == 3
     assert result.passed is False
+
+def test_pass_when_dataframe_is_empty() -> None:
+    df = pd.DataFrame({'customer_id':[]})
+
+    rule = NotNullRule('customer_id')
+    result = rule.validate(df, 'test_empty')
+
+    assert result.failed_rows == 0
+    assert result.passed is True
     
