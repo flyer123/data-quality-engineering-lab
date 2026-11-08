@@ -14,12 +14,12 @@ class RegexRule(ValidationRule):
         data: pd.DataFrame,
         dataset: str,
     ) -> ValidationResult:
-        failed_rows = len(
-            data[
-                data[self.column].notna()
-                & ~data[self.column].str.match(self.pattern)
-            ]
+        series = data[self.column]
+        invalid_mask = (
+            series.notna()
+            & ~series.str.fullmatch(self.pattern, na=False)
         )
+        failed_rows = int(invalid_mask.sum())
 
         passed = failed_rows == 0
 

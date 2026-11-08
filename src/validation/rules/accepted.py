@@ -10,6 +10,8 @@ class AcceptedValuesRule(ValidationRule):
         self.accepted_values = accepted_values
 
     def validate(self, data: pd.DataFrame, dataset: str) -> ValidationResult:
+        if not self.accepted_values:
+            raise ValueError("accepted_values cannot be empty")
         failed_rows = len(data[
                         data[self.column].notna()
                         & ~data[self.column].isin(self.accepted_values)
